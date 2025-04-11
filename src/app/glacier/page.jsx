@@ -1,123 +1,102 @@
 "use client";
 import React, { useState } from "react";
 import Layout from "../components/layout";
-import { Box, Typography, Grid, TextField, FormControl, RadioGroup, FormControlLabel, Radio, Button, MenuItem } from "@mui/material";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, AreaChart, Area, ScatterChart, Scatter, RadialBarChart, RadialBar } from "recharts";
+import Image from "next/image";
+import ForecastChart1 from "./3.png";
+import ForecastChart2 from "./2.png";
+import ForecastChart3 from "./1.png";
 
-// Sample glacier-related data for the charts (Snow accumulation, meltwater, mass balance)
-const glacierData = [
-  { name: "January", SnowAccumulation: 120, MeltwaterFlow: 80, MassBalance: 40 },
-  { name: "February", SnowAccumulation: 110, MeltwaterFlow: 90, MassBalance: 20 },
-  { name: "March", SnowAccumulation: 100, MeltwaterFlow: 110, MassBalance: -10 },
-  { name: "April", SnowAccumulation: 80, MeltwaterFlow: 120, MassBalance: -40 },
-  { name: "May", SnowAccumulation: 60, MeltwaterFlow: 130, MassBalance: -70 },
-  { name: "June", SnowAccumulation: 50, MeltwaterFlow: 150, MassBalance: -100 },
-  { name: "July", SnowAccumulation: 30, MeltwaterFlow: 180, MassBalance: -150 },
-];
+export default function MLPrediction() {
+  const [inputDate, setInputDate] = useState("");
+  const [inputOutflow, setInputOutflow] = useState("");
+  const [predictionResult, setPredictionResult] = useState(null);
 
-export default function GlacierPage() {
-  const [plotType, setPlotType] = useState("AreaChart");
-  const [factor, setFactor] = useState("MeltwaterFlow");
-  const [selectedData, setSelectedData] = useState(glacierData);
+  const handlePredict = async (e) => {
+    e.preventDefault();
 
-  const handlePlotTypeChange = (event) => {
-    setPlotType(event.target.value);
-  };
+    if (!inputDate || !inputOutflow) {
+      alert("Please provide both date and outflow!");
+      return;
+    }
 
-  const handleFactorChange = (event) => {
-    setFactor(event.target.value);
-  };
+    setPredictionResult("Loading...");
 
-  const handleView = () => {
-    // Logic for filtering data or updating chart based on inputs can go here
-    console.log("Viewing glacier data...");
+    // Simulate backend call
+    setTimeout(() => {
+      const fakePrediction = 83200; // Simulated value
+      setPredictionResult(`Predicted Chashma Upstream Flow: ${fakePrediction}`);
+    }, 1000);
   };
 
   return (
     <Layout>
-      <Box sx={{ p: 3 }}>
-        <Typography variant="h5" gutterBottom>
-          Glacier Melt and Water Flow Impact on Irrigation
-        </Typography>
-        <Grid container spacing={3}>
-          {/* Input Section */}
-          <Grid item xs={12} md={4}>
-            <Box sx={{ p: 2, border: "1px solid #ccc", borderRadius: "8px" }}>
-              <FormControl fullWidth margin="normal">
-                <TextField label="Glacier" select>
-                  <MenuItem value="Glacier1">Glacier 1</MenuItem>
-                  <MenuItem value="Glacier2">Glacier 2</MenuItem>
-                </TextField>
-              </FormControl>
-              <FormControl fullWidth margin="normal">
-                <TextField label="From Date" type="date" InputLabelProps={{ shrink: true }} />
-              </FormControl>
-              <FormControl fullWidth margin="normal">
-                <TextField label="To Date" type="date" InputLabelProps={{ shrink: true }} />
-              </FormControl>
-              <FormControl component="fieldset" margin="normal">
-                <Typography>Plotting Factor:</Typography>
-                <RadioGroup value={factor} onChange={handleFactorChange} row>
-                  <FormControlLabel value="SnowAccumulation" control={<Radio />} label="Snow Accumulation" />
-                  <FormControlLabel value="MeltwaterFlow" control={<Radio />} label="Meltwater Flow" />
-                  <FormControlLabel value="MassBalance" control={<Radio />} label="Mass Balance" />
-                </RadioGroup>
-              </FormControl>
-              <FormControl component="fieldset" margin="normal">
-                <Typography>Plot Type:</Typography>
-                <RadioGroup value={plotType} onChange={handlePlotTypeChange} row>
-                  <FormControlLabel value="AreaChart" control={<Radio />} label="Area Chart" />
-                  <FormControlLabel value="BarChart" control={<Radio />} label="Stacked Bar Chart" />
-                  <FormControlLabel value="ScatterChart" control={<Radio />} label="Scatter Plot" />
-                  <FormControlLabel value="RadialBarChart" control={<Radio />} label="Radial Bar Chart" />
-                </RadioGroup>
-              </FormControl>
-              <Button variant="contained" color="primary" fullWidth onClick={handleView}>
-                View
-              </Button>
-            </Box>
-          </Grid>
+      <div className="p-4 bg-gray-100 min-h-screen">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">
+          ML-Based Tarbela Outflow Forecasting
+        </h1>
 
-          {/* Chart Section */}
-          <Grid item xs={12} md={8}>
-            {plotType === "AreaChart" ? (
-              <AreaChart width={600} height={300} data={selectedData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Area type="monotone" dataKey={factor} fill="#8884d8" stroke="#8884d8" />
-              </AreaChart>
-            ) : plotType === "BarChart" ? (
-              <BarChart width={600} height={300} data={selectedData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="SnowAccumulation" stackId="a" fill="#8884d8" />
-                <Bar dataKey="MeltwaterFlow" stackId="a" fill="#82ca9d" />
-                <Bar dataKey="MassBalance" stackId="a" fill="#ffc658" />
-              </BarChart>
-            ) : plotType === "ScatterChart" ? (
-              <ScatterChart width={600} height={300}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="SnowAccumulation" />
-                <YAxis dataKey="MeltwaterFlow" />
-                <Tooltip />
-                <Scatter name="Meltwater vs Snowfall" data={selectedData} fill="#8884d8" />
-              </ScatterChart>
-            ) : (
-              <RadialBarChart width={600} height={300} innerRadius="10%" outerRadius="80%" data={selectedData}>
-                <RadialBar minAngle={15} label={{ position: "insideStart", fill: "#fff" }} background clockWise dataKey="MassBalance" />
-                <Legend />
-                <Tooltip />
-              </RadialBarChart>
-            )}
-          </Grid>
-        </Grid>
-      </Box>
+        {/* Forecast Charts */}
+        <div className="flex overflow-x-auto space-x-6">
+          {[ForecastChart1, ForecastChart2, ForecastChart3].map((img, i) => (
+            <div
+              key={i}
+              className="flex flex-col items-center bg-white p-4 rounded-lg shadow-md min-w-[420px]"
+            >
+              <Image
+                src={img}
+                alt={`Forecast ${i + 1}`}
+                width={400}
+                height={300}
+                className="rounded-lg shadow"
+              />
+              <p className="text-sm mt-2 text-center text-gray-700">
+                Forecasted Outflows {i + 1}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Prediction Form */}
+        <div className="bg-white p-6 mt-8 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">
+            Make a Prediction
+          </h2>
+
+          <form
+            onSubmit={handlePredict}
+            className="flex flex-col md:flex-row gap-4 items-center"
+          >
+            <input
+              type="date"
+              value={inputDate}
+              onChange={(e) => setInputDate(e.target.value)}
+              className="border border-gray-300 p-2 rounded-md w-full md:w-1/3"
+              placeholder="Select a date"
+            />
+
+            <input
+              type="number"
+              value={inputOutflow}
+              onChange={(e) => setInputOutflow(e.target.value)}
+              className="border border-gray-300 p-2 rounded-md w-full md:w-1/3"
+              placeholder="Enter Tarbela Outflow"
+            />
+
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow"
+            >
+              Predict Outflow
+            </button>
+          </form>
+
+          {predictionResult && (
+            <div className="mt-4 text-lg text-green-700 font-semibold">
+              {predictionResult}
+            </div>
+          )}
+        </div>
+      </div>
     </Layout>
   );
 }
