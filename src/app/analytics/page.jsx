@@ -1,178 +1,102 @@
 "use client";
 import React from "react";
 import Layout from "../components/layout";
-import {
-  Box,
-  Typography,
-  Grid,
-  Paper,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts";
+import { Box, Typography, Paper, Grid } from "@mui/material";
+import WaterDropIcon from "@mui/icons-material/WaterDrop";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
-// Sample data for the time series forecasting (Historical vs. Predicted)
-const forecastData = [
-  { month: "January", actual: 200, predicted: 210 },
-  { month: "February", actual: 230, predicted: 225 },
-  { month: "March", actual: 250, predicted: 240 },
-  { month: "April", actual: 270, predicted: 265 },
-  { month: "May", actual: 300, predicted: 310 },
-  { month: "June", actual: 320, predicted: 315 },
-  { month: "July", actual: 330, predicted: 340 },
-];
+export default function SensorDataDisplay() {
+  // Replace this with real data from sensor API in the future
+  const sensorReading = {
+    date: "21-April-2025",
+    time: "10:33:45 PM",
+    waterLevel: "11 CM",
+  };
 
-// Sample data for the error distribution (Forecast Error Ranges)
-const errorDistribution = [
-  { range: "0-5%", value: 45 },
-  { range: "5-10%", value: 30 },
-  { range: "10-15%", value: 15 },
-  { range: "15%+", value: 10 },
-];
-
-// Define colors for the pie chart
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
-export default function Analytics() {
   return (
     <Layout>
-      <Box sx={{ padding: 3, backgroundColor: "#f9f9f9" }}>
-        {/* Title Section */}
-        <Typography
-          variant="h4"
-          gutterBottom
-          align="center"
-          sx={{ fontWeight: "bold" }}
-        >
-          ML Predictions for Time Series Forecasting
-        </Typography>
-
-        {/* Line Chart Section */}
+      <Box
+        sx={{
+          minHeight: "100vh",
+          backgroundColor: "#e0f7fa",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 4,
+        }}
+      >
         <Paper
+          elevation={10}
           sx={{
-            padding: 3,
-            marginBottom: 4,
+            padding: 6,
             backgroundColor: "#ffffff",
-            borderRadius: 2,
-            boxShadow: 2,
+            borderRadius: "20px",
+            width: "100%",
+            maxWidth: 500,
+            textAlign: "center",
+            boxShadow: "0 8px 16px rgba(0, 0, 0, 0.15)",
           }}
         >
-          <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-            Historical vs. Predicted Values
-          </Typography>
-          <LineChart
-            width={600}
-            height={300}
-            data={forecastData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: "bold", color: "#00796b", marginBottom: 4 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="actual"
-              stroke="#8884d8"
-              name="Actual"
-            />
-            <Line
-              type="monotone"
-              dataKey="predicted"
-              stroke="#82ca9d"
-              name="Predicted"
-            />
-          </LineChart>
-        </Paper>
-
-        {/* Pie Chart Section */}
-        <Paper
-          sx={{
-            padding: 3,
-            marginBottom: 4,
-            backgroundColor: "#ffffff",
-            borderRadius: 2,
-            boxShadow: 2,
-          }}
-        >
-          <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-            Forecast Error Distribution
+            🌊 Live Water Level Monitor
           </Typography>
-          <PieChart width={400} height={400}>
-            <Pie
-              data={errorDistribution}
-              cx={200}
-              cy={200}
-              labelLine={false}
-              label={({ range, percent }) =>
-                `${range} (${(percent * 100).toFixed(0)}%)`
-              }
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="value"
-            >
-              {errorDistribution.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </Paper>
 
-        {/* Insights Section */}
-        <Paper
-          sx={{
-            padding: 3,
-            backgroundColor: "#ffffff",
-            borderRadius: 2,
-            boxShadow: 2,
-          }}
-        >
-          <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-            Insights and Recommendations
-          </Typography>
-          <List>
-            <ListItem>
-              <ListItemText
-                primary={<strong>Model Accuracy:</strong>}
-                secondary="The line chart indicates that the model's predictions closely follow the actual values. A continuous evaluation of performance metrics like MAPE can further validate the model's accuracy."
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary={<strong>Error Analysis:</strong>}
-                secondary="The pie chart shows that the majority of predictions fall within a 0-5% error range, suggesting reliable forecasting. However, the 15%+ error segment should be analyzed to identify potential model improvements."
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary={<strong>Feature Optimization:</strong>}
-                secondary="Review input features and consider incorporating additional variables to capture seasonal trends or external factors that might affect forecasting performance."
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary={<strong>Future Enhancements:</strong>}
-                secondary="Implementing cross-validation and hyperparameter tuning can optimize the model further. Also, exploring advanced techniques like ensemble methods may lead to more robust predictions."
-              />
-            </ListItem>
-          </List>
+          <Grid container spacing={3} justifyContent="center">
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  backgroundColor: "#f1f8e9",
+                  borderRadius: "12px",
+                  padding: 2,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 2,
+                }}
+              >
+                <CalendarTodayIcon color="primary" />
+                <Typography variant="h6">{sensorReading.date}</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  backgroundColor: "#fffde7",
+                  borderRadius: "12px",
+                  padding: 2,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 2,
+                }}
+              >
+                <AccessTimeIcon color="secondary" />
+                <Typography variant="h6">{sensorReading.time}</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  backgroundColor: "#e3f2fd",
+                  borderRadius: "12px",
+                  padding: 3,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 2,
+                }}
+              >
+                <WaterDropIcon color="info" sx={{ fontSize: 40 }} />
+                <Typography variant="h3" sx={{ fontWeight: "bold" }}>
+                  {sensorReading.waterLevel}
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
         </Paper>
       </Box>
     </Layout>
