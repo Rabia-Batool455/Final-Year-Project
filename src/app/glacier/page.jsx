@@ -8,14 +8,13 @@ import ForecastChart3 from "./1.png";
 
 export default function MLPrediction() {
   const [inputDate, setInputDate] = useState("");
-  const [inputOutflow, setInputOutflow] = useState("");
   const [predictionResult, setPredictionResult] = useState(null);
 
   const handlePredict = async (e) => {
     e.preventDefault();
 
-    if (!inputDate || !inputOutflow) {
-      alert("Please provide both date and outflow!");
+    if (!inputDate) {
+      alert("Please select a date!");
       return;
     }
 
@@ -72,14 +71,6 @@ export default function MLPrediction() {
               onChange={(e) => setInputDate(e.target.value)}
               className="border border-gray-300 p-2 rounded-md w-full md:w-1/3"
               placeholder="Select a date"
-            />
-
-            <input
-              type="number"
-              value={inputOutflow}
-              onChange={(e) => setInputOutflow(e.target.value)}
-              className="border border-gray-300 p-2 rounded-md w-full md:w-1/3"
-              placeholder="Enter Tarbela Outflow"
             />
 
             <button
