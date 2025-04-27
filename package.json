@@ -19,6 +19,8 @@
     "chart.js": "^4.4.6",
     "concurrently": "^9.1.2",
     "express": "^4.21.2",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
     "leaflet": "^1.9.4",
     "msnodesqlv8": "^4.4.0",
     "mssql": "^11.0.1",

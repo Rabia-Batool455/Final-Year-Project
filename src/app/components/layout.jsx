@@ -215,12 +215,12 @@ export default function Layout({ children }) {
               </ListItemButton>
             </ListItem>
             <Divider />
-            <ListItem key="Analytics" disablePadding className={pathname.startsWith("/analytics") ? "text-sky-600" : "text-slate-700"} onClick={() => { router.push("/analytics") }}>
+            <ListItem key="Water_Level" disablePadding className={pathname.startsWith("/water_Level") ? "text-sky-600" : "text-slate-700"} onClick={() => { router.push("/water_Level"); }}>
               <ListItemButton>
                 <ListItemIcon>
                   <PieChartIcon sx={{ color: 'green' }} /> {/* Replaced DashboardIcon with PieChartIcon */}
               </ListItemIcon>
-            <ListItemText primary="Analytics" />
+            <ListItemText primary="Water_Level" />
               </ListItemButton>
                 </ListItem>
             <ListItem key="RiversData"
@@ -278,12 +278,12 @@ export default function Layout({ children }) {
                 <ListItemText primary="Temperature" />
               </ListItemButton>
             </ListItem>
-            <ListItem key="Glacier" disablePadding className={pathname.startsWith("/glacier") ? "text-sky-600" : "text-slate-700"} onClick={() => { router.push("/glacier") }}>
+            <ListItem key="Ml_Predictions" disablePadding className={pathname.startsWith("/glacier") ? "text-sky-600" : "text-slate-700"} onClick={() => { router.push("/ml_predictions") }}>
               <ListItemButton>
                 <ListItemIcon>
                   <GlacierIcon sx={{ color: 'blue' }} />
                 </ListItemIcon>
-                <ListItemText primary="Glacier" />
+                <ListItemText primary="Ml_Predictions" />
               </ListItemButton>
             </ListItem>
             <Divider />
